@@ -1,5 +1,6 @@
 // this is manas
 //This is Peter huy
+// This is israel
 
 import java.util.Scanner;
 
