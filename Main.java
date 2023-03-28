@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 class Main{
   public static void main(String[] args) throws FileNotFoundException  {
     Player1 Peter = new Player1("Peter");
@@ -39,10 +40,15 @@ class Main{
     System.out.println("GAME OVER");
   }   
 =======
+=======
+>>>>>>> origin/main
 class Main {
   public static void main(String[] args) throws FileNotFoundException {
     TTT theGame = new TTT();
     System.out.println("Let's make Tic-Tac-Toe");
   }
+<<<<<<< HEAD
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
 }
