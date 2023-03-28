@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 
+<<<<<<< HEAD
 class Main{
   public static void main(String[] args) throws FileNotFoundException  {
     Player1 Peter = new Player1("Peter");
@@ -37,4 +38,11 @@ class Main{
     }
     System.out.println("GAME OVER");
   }   
+=======
+class Main {
+  public static void main(String[] args) throws FileNotFoundException {
+    TTT theGame = new TTT();
+    System.out.println("Let's make Tic-Tac-Toe");
+  }
+>>>>>>> origin/main
 }
