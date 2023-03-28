@@ -6,5 +6,4 @@ class Main {
     TTT theGame = new TTT();
     System.out.println("Let's make Tic-Tac-Toe");
   }
-
 }
