@@ -3,6 +3,11 @@ import java.io.FileNotFoundException;
 
 class Main{
   public static void main(String[] args) throws FileNotFoundException  {
+    Player1 Peter = new Player1("Peter");
+      Peter.addWin();
+
+
+    
       int SIZE = 3;
       Scanner n = new Scanner(System.in);
       System.out.println("Player 1 select your game symbol");
