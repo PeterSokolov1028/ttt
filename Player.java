@@ -1,82 +1,105 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.*;
+import java.lang.NumberFormatException;
+import java.util.ArrayList;
 
-public class Player {
+
+public class Player{
+  //FIELDS
   String name;
-  char active;
-  char[][][] gameGrid;
+  File stats = new File("PlayerStats.csv");
 
-  /// CONSTRUCTOR
-  public Player(String name, char active, char[][][] gameGrid) {
+  //CONSTRUCTOR
+  public Player(String name)throws FileNotFoundException{
     this.name = name;
-    this.active = active;
-    this.gameGrid = gameGrid;
   }
 
-  public void makeMove() {
-    Scanner s = new Scanner(System.in);
-    System.out.println("Select the Grid you are moving on and the X and Y coordinates of your move");
-    int z = s.nextInt();
-    getCoordinate(z);
-    int x = s.nextInt();
-    getCoordinate(x);
-    int y = s.nextInt();
-    getCoordinate(y);
-    gameGrid[z][y][x] = active;
+  //METHODS
+  public void addWin()throws FileNotFoundException, NumberFormatException{
+    Scanner scn = new Scanner(stats);
+    ArrayList<String[]> fileReplase = new ArrayList<String[]>();
+    while(scn.hasNextLine()){
+      String nextLine = scn.nextLine();
+      String [] temp = nextLine.split(",");
+      if(temp[0].equals(this.name)){
+        int t = Integer.valueOf(temp[1]);
+        t++;
+        temp[1] = String.valueOf(t);
+      } 
+      fileReplase.add(temp);
+    }
+    scn.close();
+    PrintWriter pw = new PrintWriter(stats);
+    for(int i=0;i<fileReplase.size();i++){
+      String[] temp2 = fileReplase.get(i);
+      for(int j=0;j<temp2.length;j++){
+        pw.print(temp2[j]+ ',');
+      }
+      pw.println();
+    }
+    pw.close();
+    
+    
   }
-
-  public char getActive() {
-    return active;
+    public void addLoss()throws FileNotFoundException, NumberFormatException{
+    Scanner scn = new Scanner(stats);
+    ArrayList<String[]> fileReplase = new ArrayList<String[]>();
+    while(scn.hasNextLine()){
+      String nextLine = scn.nextLine();
+      String [] temp = nextLine.split(",");
+      if(temp[0].equals(this.name)){
+        int t = Integer.valueOf(temp[2]);
+        t++;
+        temp[2] = String.valueOf(t);
+      } 
+      fileReplase.add(temp);
+    }
+    scn.close();
+    PrintWriter pw = new PrintWriter(stats);
+    for(int i=0;i<fileReplase.size();i++){
+      String[] temp2 = fileReplase.get(i);
+      for(int j=0;j<temp2.length;j++){
+        pw.print(temp2[j]+ ',');
+      }
+      pw.println();
+    }
+    pw.close();
+    
+    
   }
-
-  public String getName() {
-    return name;
-  }
-
-  public boolean checkWin() {
-    boolean winH = true;
-    boolean winV = true;
-    boolean winD = true;
-    boolean winD2 = true;
-    boolean winStack = true;
-    for (int k = 0; k < gameGrid.length; k++) {
-      for (int i = 0; i < gameGrid.length; i++) {
-        winH = true;
-        winV = true;
-        winD = true;
-        winD2 = true;
-        winStack = true;
-        for (int j = 0; j < gameGrid.length; j++) {
-          if (active != gameGrid[k][i][j]) {
-            winH = false;
-          }
-          if (active != gameGrid[k][j][i]) {
-            winV = false;
-          }
-          if (active != gameGrid[k][j][j]) {
-            winD = false;
-          }
-          if (active != gameGrid[k][j][2 - j]) {
-            winD2 = false;
-          }
-          if (active != gameGrid[j][i][k]) {
-            winStack = false;
-          }
-
-        }
-        if (winH || winV || winD || winD2 || winStack)
+    public boolean hasPlayed() throws FileNotFoundException {
+        Scanner scn = new Scanner(stats);
+    while (scn.hasNextLine()) {
+      String nextLine = scn.nextLine();
+      String[] temp = nextLine.split(",");
+      for (int i = 0; i < temp.length; i++) {
+        if (temp[i].equals(this.name))
           return true;
       }
     }
     return false;
   }
+    public void addPlayerToFile()throws FileNotFoundException{
+       Scanner scn = new Scanner(stats);
+        ArrayList<String> copyFile = new ArrayList<String>();
+        while(scn.hasNextLine()){
+            copyFile.add(scn.nextLine());
+        }
+        String newStatLine = this.name + "," + "0" + "," + "0"+ ",";
+        copyFile.add(newStatLine);
+        scn.close();
 
-  public void getCoordinate(int coordinate) {
-    Scanner s = new Scanner(System.in);
-    while (coordinate < 0 || coordinate > 2 || active == '-') {
-      System.out.println("The coordinate you have entered is invalid please try agian");
-      System.out.println("Select the Grid you are moving on and the X and Y coordinates of your move");
-      coordinate = s.nextInt();
+        PrintWriter pw = new PrintWriter(stats);
+        for(int i = 0;i<copyFile.size();i++){
+            pw.println(copyFile.get(i));
+        }
+        pw.close();
+        
     }
-  }
-
+    
+    
 }
+
