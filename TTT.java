@@ -20,6 +20,7 @@ public class TTT {
         while (gameOn) {
             draw();
             move();
+            gameOn = !checkWin();
         }
 
         System.out.println("I made TTT: " + this);
@@ -75,6 +76,8 @@ public class TTT {
     private boolean isSame(char[] x) {
         boolean same = true;
         for (int i = 0; i < x.length; i++) {
+            if(x[i] == 0)
+                return false;
             same = x[0] == x[i];
         }
         return same;
@@ -86,24 +89,28 @@ public class TTT {
         // Multi-board diagonals
         for (int i = 0; i < vals.length; i++)
             vals[i] = state[i][i][i];
+        System.out.println("Cross-board 1: " + Arrays.toString(vals));
         if (isSame(vals))
             return true;
         else {
             for (int i = 0; i < vals.length; i++)
                 vals[i] = state[vals.length - i - 1][i][i];
         }
+        System.out.println("Cross-board 2: " + Arrays.toString(vals));
         if (isSame(vals))
             return true;
         else {
             for (int i = 0; i < vals.length; i++)
-                vals[i] = state[vals.length - i][vals.length - i][i];
+                vals[i] = state[vals.length - i - 1][vals.length - i - 1][i];
         }
+        System.out.println("Cross-board 3: " + Arrays.toString(vals));
         if (isSame(vals))
             return true;
         else {
             for (int i = 0; i < vals.length; i++)
-                vals[i] = state[i][i][vals.length - i];
+                vals[i] = state[i][i][vals.length - i - 1];
         }
+        System.out.println("Cross-board 4: " + Arrays.toString(vals));
         if (isSame(vals))
             return true;
 
@@ -112,13 +119,15 @@ public class TTT {
             for (int j = 0; j < vals.length; j++) {
                 vals[i] = state[i][j][j];
             }
+            System.out.println("Diagonal 1: " + Arrays.toString(vals));
             if (isSame(vals))
                 return true;
         }
         for (int i = 0; i < vals.length; i++) {
             for (int j = 0; j < vals.length; j++) {
-                vals[i] = state[i][SIZE - j][j];
+                vals[i] = state[i][SIZE - j - 1][j];
             }
+            System.out.println("Diagonal 2: " + Arrays.toString(vals));
             if (isSame(vals))
                 return true;
         }
@@ -126,13 +135,15 @@ public class TTT {
             for (int j = 0; j < vals.length; j++) {
                 vals[i] = state[j][i][j];
             }
+            System.out.println("Diagonal 3: " + Arrays.toString(vals));
             if (isSame(vals))
                 return true;
         }
         for (int i = 0; i < vals.length; i++) {
             for (int j = 0; j < vals.length; j++) {
-                vals[i] = state[j][SIZE - i][j];
+                vals[i] = state[j][SIZE - i - 1][j];
             }
+            System.out.println("Diagonal 4: " + Arrays.toString(vals));
             if (isSame(vals))
                 return true;
         }
@@ -140,17 +151,50 @@ public class TTT {
             for (int j = 0; j < vals.length; j++) {
                 vals[i] = state[j][j][i];
             }
+            System.out.println("Diagonal 5: " + Arrays.toString(vals));
             if (isSame(vals))
                 return true;
         }
         for (int i = 0; i < vals.length; i++) {
             for (int j = 0; j < vals.length; j++) {
-                vals[i] = state[j][SIZE - j][i];
+                vals[i] = state[j][SIZE - j - 1][i];
             }
+            System.out.println("Diagonal 6: " + Arrays.toString(vals));
             if (isSame(vals))
                 return true;
         }
-        return true;
+
+        for(int i = 0; i < vals.length; i++){
+            for(int j = 0; j < vals.length; j++){
+                for(int k = 0; k < vals.length; k++){
+                    vals[k] = state[i][j][k];
+                }
+                System.out.println("Column 1: " + Arrays.toString(vals));
+                if(isSame(vals))
+                    return true;
+            }
+        }
+        for(int i = 0; i < vals.length; i++){
+            for(int j = 0; j < vals.length; j++){
+                for(int k = 0; k < vals.length; k++){
+                    vals[j] = state[k][i][j];
+                }
+                System.out.println("Column 2: " + Arrays.toString(vals));
+                if(isSame(vals))
+                    return true;
+            }
+        }
+        for(int i = 0; i < vals.length; i++){
+            for(int j = 0; j < vals.length; j++){
+                for(int k = 0; k < vals.length; k++){
+                    vals[i] = state[j][k][i];
+                }
+                System.out.println("Column 3: " + Arrays.toString(vals));
+                if(isSame(vals))
+                    return true;
+            }
+        }
+        return false;
     }
 
     @Override
