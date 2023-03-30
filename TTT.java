@@ -80,34 +80,75 @@ public class TTT {
         return same;
     }
 
-    private boolean checkWin(){
+    private boolean checkWin() {
         char[] vals = new char[SIZE];
-        for(int i = 0; i < vals.length; i++)
+
+        // Multi-board diagonals
+        for (int i = 0; i < vals.length; i++)
             vals[i] = state[i][i][i];
-        // 0,0,0  1,1,1  2,2,2  
-        
-        if(isSame(vals))
+        if (isSame(vals))
             return true;
-        else{
-            for(int i = 0; i < vals.length; i++)
-            vals[i] = state[vals.length-i-1][i][i];
-            // 2,0,0  1,1,1  0,2,2
+        else {
+            for (int i = 0; i < vals.length; i++)
+                vals[i] = state[vals.length - i - 1][i][i];
         }
-
-        if(isSame(vals))
+        if (isSame(vals))
             return true;
-        else{
-            for(int i = 0; i < vals.length; i++)
-            vals[i] = state[vals.length-i][vals.length-i][i];
-            // 2,2,0  1,1,1  0,0,2
+        else {
+            for (int i = 0; i < vals.length; i++)
+                vals[i] = state[vals.length - i][vals.length - i][i];
         }
-
-        if(isSame(vals))
+        if (isSame(vals))
             return true;
-        else{
-            for(int i = 0; i < vals.length; i++)
-            vals[i] = state[i][i][vals.length-i];
-            // 0,0,2  1,1,1  2,2,0
+        else {
+            for (int i = 0; i < vals.length; i++)
+                vals[i] = state[i][i][vals.length - i];
+        }
+        if (isSame(vals))
+            return true;
+
+        // Single board diagonals
+        for (int i = 0; i < vals.length; i++) {
+            for (int j = 0; j < vals.length; j++) {
+                vals[i] = state[i][j][j];
+            }
+            if (isSame(vals))
+                return true;
+        }
+        for (int i = 0; i < vals.length; i++) {
+            for (int j = 0; j < vals.length; j++) {
+                vals[i] = state[i][SIZE - j][j];
+            }
+            if (isSame(vals))
+                return true;
+        }
+        for (int i = 0; i < vals.length; i++) {
+            for (int j = 0; j < vals.length; j++) {
+                vals[i] = state[j][i][j];
+            }
+            if (isSame(vals))
+                return true;
+        }
+        for (int i = 0; i < vals.length; i++) {
+            for (int j = 0; j < vals.length; j++) {
+                vals[i] = state[j][SIZE - i][j];
+            }
+            if (isSame(vals))
+                return true;
+        }
+        for (int i = 0; i < vals.length; i++) {
+            for (int j = 0; j < vals.length; j++) {
+                vals[i] = state[j][j][i];
+            }
+            if (isSame(vals))
+                return true;
+        }
+        for (int i = 0; i < vals.length; i++) {
+            for (int j = 0; j < vals.length; j++) {
+                vals[i] = state[j][SIZE - j][i];
+            }
+            if (isSame(vals))
+                return true;
         }
         return true;
     }
