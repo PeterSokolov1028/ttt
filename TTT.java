@@ -83,6 +83,18 @@ public class TTT {
         return same;
     }
 
+    public char[][][] zRotate(){
+        char[][][] stateRotate = new char[SIZE][SIZE][SIZE];
+        for(int i = 0; i < stateRotate.length; i++){
+            for(int j = 0; j < stateRotate.length; j++){
+                for(int k = 0; k < stateRotate.length; k++){
+                    stateRotate[i][j][k] = state[i][k][SIZE-j-1];
+                }
+            }
+        }
+        return stateRotate;
+    }
+
     private boolean checkWin() {
         char[] vals = new char[SIZE];
 
