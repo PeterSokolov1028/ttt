@@ -77,33 +77,47 @@ public class TTT {
         boolean same = true;
         for (int i = 0; i < x.length; i++) {
             if (x[i] == 0)
+            if (x[i] == 0)
                 return false;
             same = x[0] == x[i];
         }
         return same;
     }
 
+    public char[][][] zRotate(int iterate) {
+        char[][][] stateRotate = new char[SIZE][SIZE][SIZE];
+        for (int x = 0; x < iterate; x++) {
+            for (int i = 0; i < stateRotate.length; i++) {
+                for (int j = 0; j < stateRotate.length; j++) {
+                    for (int k = 0; k < stateRotate.length; k++) {
+                        stateRotate[i][j][k] = state[i][k][SIZE - j - 1];
+                    }
+                }
+            }
+        }
+
+        return stateRotate;
+    }
+
     private boolean checkWin() {
         char[] vals = new char[SIZE];
 
         // Multi-board diagonals
-        for (int k = 0; k <= vals.length; k++) {
-            System.out.println("Cross-board " + (k + 1) + ": " + Arrays.toString(vals));
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < vals.length; j++) {
+                vals[j] = zRotate(i)[j][j][j];
+            }
             if (isSame(vals))
                 return true;
-            else if (k == 0) {
-                for (int i = 0; i < vals.length; i++)
-                    vals[i] = state[i][i][i];
-            } else if (k == 1) {
-                for (int i = 0; i < vals.length; i++)
-                    vals[i] = state[vals.length - i - 1][i][i];
-            } else if (k == 2) {
-                for (int i = 0; i < vals.length; i++)
-                    vals[i] = state[vals.length - i - 1][vals.length - i - 1][i];
-            } else if (k == 3) {
-                for (int i = 0; i < vals.length; i++)
-                    vals[i] = state[i][i][vals.length - i - 1];
-            }
+        }
+        for (int i = 0; i < vals.length; i++)
+            vals[i] = state[i][i][i];
+        System.out.println("Cross-board 1: " + Arrays.toString(vals));
+        if (isSame(vals))
+            return true;
+        else {
+            for (int i = 0; i < vals.length; i++)
+                vals[i] = state[vals.length - i - 1][i][i];
         }
 
         // Single board diagonals
