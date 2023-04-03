@@ -95,7 +95,6 @@ public class TTT {
                 }
             }
         }
-
         return stateRotate;
     }
 
@@ -109,15 +108,6 @@ public class TTT {
             }
             if (isSame(vals))
                 return true;
-        }
-        for (int i = 0; i < vals.length; i++)
-            vals[i] = state[i][i][i];
-        System.out.println("Cross-board 1: " + Arrays.toString(vals));
-        if (isSame(vals))
-            return true;
-        else {
-            for (int i = 0; i < vals.length; i++)
-                vals[i] = state[vals.length - i - 1][i][i];
         }
 
         // Single board diagonals
