@@ -17,6 +17,15 @@ public class TTT {
         this.turn = true;
         this.gameOn = true;
         this.state = new char[SIZE][SIZE][SIZE];
+        char t = '@';
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                for(int k = 0; k < SIZE; k++){
+                    state[i][j][k] = t;
+                    t++;
+                }
+            }
+        }
         while (gameOn) {
             draw();
             move();
@@ -86,11 +95,27 @@ public class TTT {
 
     public char[][][] zRotate(int iterate) {
         char[][][] stateRotate = new char[SIZE][SIZE][SIZE];
+        char[][][] tempRotate = new char[SIZE][SIZE][SIZE];
+        for (int i = 0; i < stateRotate.length; i++) {
+            for (int j = 0; j < stateRotate.length; j++) {
+                for (int k = 0; k < stateRotate.length; k++) {
+                    tempRotate[i][j][k] = state[i][j][k];
+                }
+            }
+        }
+
         for (int x = 0; x < iterate; x++) {
             for (int i = 0; i < stateRotate.length; i++) {
                 for (int j = 0; j < stateRotate.length; j++) {
                     for (int k = 0; k < stateRotate.length; k++) {
-                        stateRotate[i][j][k] = state[i][k][SIZE - j - 1];
+                        stateRotate[i][j][k] = tempRotate[i][k][SIZE - j - 1];
+                    }
+                }
+            }
+            for (int i = 0; i < stateRotate.length; i++) {
+                for (int j = 0; j < stateRotate.length; j++) {
+                    for (int k = 0; k < stateRotate.length; k++) {
+                        tempRotate[i][j][k] = stateRotate[i][j][k];
                     }
                 }
             }
@@ -106,6 +131,7 @@ public class TTT {
             for (int j = 0; j < vals.length; j++) {
                 vals[j] = zRotate(i)[j][j][j];
             }
+            System.out.println("Cross-board " + (i+1) + ": " + Arrays.toString(vals));
             if (isSame(vals))
                 return true;
         }
