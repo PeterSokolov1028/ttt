@@ -23,6 +23,7 @@ public class TTT {
                 for (int k = 0; k < SIZE; k++) {
                     state[i][j][k] = t;
                     t++;
+                    //weuidhqwuihduiq
                 }
             }
         }
