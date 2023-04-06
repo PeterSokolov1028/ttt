@@ -127,7 +127,57 @@ public class TTT {
         return stateRotate;
     }
 
+    public char[][][] yRotate(int iterate) {
+        if (iterate == 0)
+            return state;
+
+        char[][][] stateRotate = new char[SIZE][SIZE][SIZE];
+        char[][][] tempRotate = new char[SIZE][SIZE][SIZE];
+        for (int i = 0; i < stateRotate.length; i++) {
+            for (int j = 0; j < stateRotate.length; j++) {
+                for (int k = 0; k < stateRotate.length; k++) {
+                    tempRotate[i][j][k] = state[i][j][k];
+                }
+            }
+        }
+
+        for (int x = 0; x < iterate; x++) {
+            for (int i = 0; i < stateRotate.length; i++) {
+                for (int j = 0; j < stateRotate.length; j++) {
+                    for (int k = 0; k < stateRotate.length; k++) {
+                        stateRotate[i][j][k] = tempRotate[j][SIZE - i - 1][k];
+                    }
+                }
+            }
+            for (int i = 0; i < stateRotate.length; i++) {
+                for (int j = 0; j < stateRotate.length; j++) {
+                    for (int k = 0; k < stateRotate.length; k++) {
+                        tempRotate[i][j][k] = stateRotate[i][j][k];
+                    }
+                }
+            }
+        }
+
+        System.out.println();
+        for (char[][] board : stateRotate) {
+            for (char[] rows : board) {
+                for (char x : rows) {
+                    if (x == 0) {
+                        System.out.print("[ ]");
+                    } else {
+                        System.out.print("[" + x + "]");
+                    }
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+        System.out.println();
+        return stateRotate;
+    }
+
     private boolean checkWin() {
+        yRotate(1);
         char[] vals = new char[SIZE];
 
         // Multi-board diagonals
@@ -162,6 +212,24 @@ public class TTT {
                             vals[j] = state[k][i][j];
                         else if (l == 2)
                             vals[i] = state[j][k][i];
+                    }
+                    System.out.println("Column " + (l + 1) + ": " + Arrays.toString(vals));
+                    if (isSame(vals))
+                        return true;
+                }
+            }
+        }
+
+        for (int l = 0; l < 3; l++) {
+            for (int i = 0; i < vals.length; i++) {
+                for (int j = 0; j < vals.length; j++) {
+                    for (int k = 0; k < vals.length; k++) {
+                        if (l == 0)
+                            vals[k] = zRotate(1)[i][j][k];
+                        else if (l == 1)
+                            vals[j] = zRotate(1)[k][i][j];
+                        else if (l == 2)
+                            vals[i] = zRotate(1)[j][k][i];
                     }
                     System.out.println("Column " + (l + 1) + ": " + Arrays.toString(vals));
                     if (isSame(vals))
