@@ -151,29 +151,6 @@ public class TTT {
                     return true;
             }
         }
-        /*
-         * for (int k = 0; k < 6; k++) {
-         * for (int i = 0; i < vals.length; i++) {
-         * for (int j = 0; j < vals.length; j++) {
-         * if (k == 0)
-         * vals[i] = state[i][j][j];
-         * else if (k == 1)
-         * vals[i] = state[i][SIZE - j - 1][j];
-         * else if (k == 2)
-         * vals[i] = state[j][i][j];
-         * else if (k == 3)
-         * vals[i] = state[j][SIZE - i - 1][j];
-         * else if (k == 4)
-         * vals[i] = state[j][j][i];
-         * else if (k == 5)
-         * vals[i] = state[j][SIZE - j - 1][i];
-         * }
-         * System.out.println("Diagonal " + (k + 1) + ": " + Arrays.toString(vals));
-         * if (isSame(vals))
-         * return true;
-         * }
-         * }
-         */
 
         for (int l = 0; l < 3; l++) {
             for (int i = 0; i < vals.length; i++) {
