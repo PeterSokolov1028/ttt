@@ -18,21 +18,21 @@ public class TTT {
         this.gameOn = true;
         this.state = new char[SIZE][SIZE][SIZE];
         char t = '@';
-        for(int i = 0; i < SIZE; i++){
-            for(int j = 0; j < SIZE; j++){
-                for(int k = 0; k < SIZE; k++){
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                for (int k = 0; k < SIZE; k++) {
                     state[i][j][k] = t;
                     t++;
                 }
             }
         }
-        while (gameOn) {
+        while (true) {
             draw();
             move();
             gameOn = !checkWin();
         }
 
-        System.out.println("I made TTT: " + this);
+        // System.out.println("I made TTT: " + this);
     }
 
     // Methods
@@ -86,14 +86,17 @@ public class TTT {
         boolean same = true;
         for (int i = 0; i < x.length; i++) {
             if (x[i] == 0)
-            if (x[i] == 0)
-                return false;
+                if (x[i] == 0)
+                    return false;
             same = x[0] == x[i];
         }
         return same;
     }
 
     public char[][][] zRotate(int iterate) {
+        if (iterate == 0)
+            return state;
+
         char[][][] stateRotate = new char[SIZE][SIZE][SIZE];
         char[][][] tempRotate = new char[SIZE][SIZE][SIZE];
         for (int i = 0; i < stateRotate.length; i++) {
@@ -131,33 +134,45 @@ public class TTT {
             for (int j = 0; j < vals.length; j++) {
                 vals[j] = zRotate(i)[j][j][j];
             }
-            System.out.println("Cross-board " + (i+1) + ": " + Arrays.toString(vals));
+            System.out.println("Cross-board " + (i + 1) + ": " + Arrays.toString(vals));
             if (isSame(vals))
                 return true;
         }
 
         // Single board diagonals
-        for (int k = 0; k < 6; k++) {
-            for (int i = 0; i < vals.length; i++) {
-                for (int j = 0; j < vals.length; j++) {
-                    if (k == 0)
-                        vals[i] = state[i][j][j];
-                    else if (k == 1)
-                        vals[i] = state[i][SIZE - j - 1][j];
-                    else if (k == 2)
-                        vals[i] = state[j][i][j];
-                    else if (k == 3)
-                        vals[i] = state[j][SIZE - i - 1][j];
-                    else if (k == 4)
-                        vals[i] = state[j][j][i];
-                    else if (k == 5)
-                        vals[i] = state[j][SIZE - j - 1][i];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                for (int k = 0; k < SIZE; k++) {
+                    vals[k] = zRotate(i)[k][k][j];
                 }
-                System.out.println("Diagonal " + (k + 1) + ": " + Arrays.toString(vals));
+                System.out.println("Diagonal " + (i + 1) + ": " + Arrays.toString(vals));
                 if (isSame(vals))
                     return true;
             }
         }
+        /*
+         * for (int k = 0; k < 6; k++) {
+         * for (int i = 0; i < vals.length; i++) {
+         * for (int j = 0; j < vals.length; j++) {
+         * if (k == 0)
+         * vals[i] = state[i][j][j];
+         * else if (k == 1)
+         * vals[i] = state[i][SIZE - j - 1][j];
+         * else if (k == 2)
+         * vals[i] = state[j][i][j];
+         * else if (k == 3)
+         * vals[i] = state[j][SIZE - i - 1][j];
+         * else if (k == 4)
+         * vals[i] = state[j][j][i];
+         * else if (k == 5)
+         * vals[i] = state[j][SIZE - j - 1][i];
+         * }
+         * System.out.println("Diagonal " + (k + 1) + ": " + Arrays.toString(vals));
+         * if (isSame(vals))
+         * return true;
+         * }
+         * }
+         */
 
         for (int l = 0; l < 3; l++) {
             for (int i = 0; i < vals.length; i++) {
