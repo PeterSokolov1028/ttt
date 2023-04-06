@@ -145,7 +145,7 @@ public class TTT {
             for (int i = 0; i < stateRotate.length; i++) {
                 for (int j = 0; j < stateRotate.length; j++) {
                     for (int k = 0; k < stateRotate.length; k++) {
-                        stateRotate[i][j][k] = tempRotate[j][SIZE - i - 1][k];
+                        stateRotate[i][j][k] = tempRotate[k][SIZE - i - 1][j];
                     }
                 }
             }
@@ -157,22 +157,6 @@ public class TTT {
                 }
             }
         }
-
-        System.out.println();
-        for (char[][] board : stateRotate) {
-            for (char[] rows : board) {
-                for (char x : rows) {
-                    if (x == 0) {
-                        System.out.print("[ ]");
-                    } else {
-                        System.out.print("[" + x + "]");
-                    }
-                }
-                System.out.println();
-            }
-            System.out.println();
-        }
-        System.out.println();
         return stateRotate;
     }
 
@@ -202,36 +186,37 @@ public class TTT {
             }
         }
 
-        for (int l = 0; l < 3; l++) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                for (int k = 0; k < SIZE; k++) {
+                    vals[k] = yRotate(i)[k][k][j];
+                }
+                System.out.println("Diagonal " + (i + 5) + ": " + Arrays.toString(vals));
+                if (isSame(vals))
+                    return true;
+            }
+        }
+
+        for (int l = 0; l < 2; l++) {
             for (int i = 0; i < vals.length; i++) {
                 for (int j = 0; j < vals.length; j++) {
                     for (int k = 0; k < vals.length; k++) {
-                        if (l == 0)
-                            vals[k] = state[i][j][k];
-                        else if (l == 1)
-                            vals[j] = state[k][i][j];
-                        else if (l == 2)
-                            vals[i] = state[j][k][i];
+                            vals[k] = zRotate(l)[i][j][k];
                     }
-                    System.out.println("Column " + (l + 1) + ": " + Arrays.toString(vals));
+                    System.out.println("Column " + (j + 1) + ": " + Arrays.toString(vals));
                     if (isSame(vals))
                         return true;
                 }
             }
         }
 
-        for (int l = 0; l < 3; l++) {
+        for (int l = 0; l < 2; l++) {
             for (int i = 0; i < vals.length; i++) {
                 for (int j = 0; j < vals.length; j++) {
                     for (int k = 0; k < vals.length; k++) {
-                        if (l == 0)
-                            vals[k] = zRotate(1)[i][j][k];
-                        else if (l == 1)
-                            vals[j] = zRotate(1)[k][i][j];
-                        else if (l == 2)
-                            vals[i] = zRotate(1)[j][k][i];
+                            vals[k] = yRotate(l)[i][j][k];
                     }
-                    System.out.println("Column " + (l + 1) + ": " + Arrays.toString(vals));
+                    System.out.println("Column " + (j + 5) + ": " + Arrays.toString(vals));
                     if (isSame(vals))
                         return true;
                 }
