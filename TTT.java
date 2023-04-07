@@ -74,10 +74,8 @@ public class TTT {
     }
 
     private char activatePlayer() {
-        System.out.println(activePlayer);
         activePlayer++;
         activePlayer %= Math.min(players.length, marks.length);
-        System.out.println(activePlayer);
 
         return marks[activePlayer];
     }
@@ -85,9 +83,8 @@ public class TTT {
     private char isSame(char[] x) {
         boolean same = true;
         for (int i = 0; i < x.length; i++) {
-            if (x[i] == 0)
+            if (x[i] == 0 || x[0] != x[i])
                 return 0;
-            same = x[0] == x[i];
         }
         return x[0];
     }
@@ -168,7 +165,7 @@ public class TTT {
             }
             // System.out.println("Cross-board " + (i + 1) + ": " + Arrays.toString(vals));
             if (isSame(vals) != 0) {
-                System.out.println(isSame(vals) + " wins!");
+                System.out.println(marks[activePlayer] + " wins!");
                 return true;
             }
 
@@ -182,7 +179,7 @@ public class TTT {
                 }
                 // System.out.println("Diagonal " + (i + 1) + ": " + Arrays.toString(vals));
                 if (isSame(vals) != 0) {
-                    System.out.println(isSame(vals) + " wins!");
+                    System.out.println(marks[activePlayer] + " wins!");
                     return true;
                 }
             }
@@ -195,12 +192,13 @@ public class TTT {
                 }
                 // System.out.println("Diagonal " + (i + 5) + ": " + Arrays.toString(vals));
                 if (isSame(vals) != 0) {
-                    System.out.println(isSame(vals) + " wins!");
+                    System.out.println(marks[activePlayer] + " wins!");
                     return true;
                 }
             }
         }
 
+        // Columns
         for (int l = 0; l < 2; l++) {
             for (int i = 0; i < vals.length; i++) {
                 for (int j = 0; j < vals.length; j++) {
@@ -209,7 +207,7 @@ public class TTT {
                     }
                     // System.out.println("Column " + (j + 1) + ": " + Arrays.toString(vals));
                     if (isSame(vals) != 0) {
-                        System.out.println(isSame(vals) + " wins!");
+                        System.out.println(marks[activePlayer] + " wins!");
                         return true;
                     }
                 }
@@ -224,7 +222,7 @@ public class TTT {
                     }
                     // System.out.println("Column " + (j + 5) + ": " + Arrays.toString(vals));
                     if (isSame(vals) != 0) {
-                        System.out.println(isSame(vals) + " wins!");
+                        System.out.println(marks[activePlayer] + " wins!");
                         return true;
                     }
                 }
