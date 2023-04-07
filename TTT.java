@@ -18,22 +18,21 @@ public class TTT {
         this.gameOn = true;
         this.state = new char[SIZE][SIZE][SIZE];
         char t = '@';
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                for (int k = 0; k < SIZE; k++) {
-                    state[i][j][k] = t;
-                    t++;
-                    //weuidhqwuihduiq
-                }
-            }
-        }
-        while (true) {
+        /*
+         * for (int i = 0; i < SIZE; i++) {
+         * for (int j = 0; j < SIZE; j++) {
+         * for (int k = 0; k < SIZE; k++) {
+         * state[i][j][k] = t;
+         * t++;
+         * }
+         * }
+         * }
+         */
+        while (gameOn) {
             draw();
             move();
             gameOn = !checkWin();
         }
-
-        // System.out.println("I made TTT: " + this);
     }
 
     // Methods
@@ -83,15 +82,14 @@ public class TTT {
         return marks[activePlayer];
     }
 
-    private boolean isSame(char[] x) {
+    private char isSame(char[] x) {
         boolean same = true;
         for (int i = 0; i < x.length; i++) {
             if (x[i] == 0)
-                if (x[i] == 0)
-                    return false;
+                return 0;
             same = x[0] == x[i];
         }
-        return same;
+        return x[0];
     }
 
     public char[][][] zRotate(int iterate) {
@@ -161,7 +159,6 @@ public class TTT {
     }
 
     private boolean checkWin() {
-        yRotate(1);
         char[] vals = new char[SIZE];
 
         // Multi-board diagonals
@@ -169,9 +166,12 @@ public class TTT {
             for (int j = 0; j < vals.length; j++) {
                 vals[j] = zRotate(i)[j][j][j];
             }
-            System.out.println("Cross-board " + (i + 1) + ": " + Arrays.toString(vals));
-            if (isSame(vals))
+            // System.out.println("Cross-board " + (i + 1) + ": " + Arrays.toString(vals));
+            if (isSame(vals) != 0) {
+                System.out.println(isSame(vals) + " wins!");
                 return true;
+            }
+
         }
 
         // Single board diagonals
@@ -180,9 +180,11 @@ public class TTT {
                 for (int k = 0; k < SIZE; k++) {
                     vals[k] = zRotate(i)[k][k][j];
                 }
-                System.out.println("Diagonal " + (i + 1) + ": " + Arrays.toString(vals));
-                if (isSame(vals))
+                // System.out.println("Diagonal " + (i + 1) + ": " + Arrays.toString(vals));
+                if (isSame(vals) != 0) {
+                    System.out.println(isSame(vals) + " wins!");
                     return true;
+                }
             }
         }
 
@@ -191,21 +193,10 @@ public class TTT {
                 for (int k = 0; k < SIZE; k++) {
                     vals[k] = yRotate(i)[k][k][j];
                 }
-                System.out.println("Diagonal " + (i + 5) + ": " + Arrays.toString(vals));
-                if (isSame(vals))
+                // System.out.println("Diagonal " + (i + 5) + ": " + Arrays.toString(vals));
+                if (isSame(vals) != 0) {
+                    System.out.println(isSame(vals) + " wins!");
                     return true;
-            }
-        }
-
-        for (int l = 0; l < 2; l++) {
-            for (int i = 0; i < vals.length; i++) {
-                for (int j = 0; j < vals.length; j++) {
-                    for (int k = 0; k < vals.length; k++) {
-                            vals[k] = zRotate(l)[i][j][k];
-                    }
-                    System.out.println("Column " + (j + 1) + ": " + Arrays.toString(vals));
-                    if (isSame(vals))
-                        return true;
                 }
             }
         }
@@ -214,11 +205,28 @@ public class TTT {
             for (int i = 0; i < vals.length; i++) {
                 for (int j = 0; j < vals.length; j++) {
                     for (int k = 0; k < vals.length; k++) {
-                            vals[k] = yRotate(l)[i][j][k];
+                        vals[k] = zRotate(l)[i][j][k];
                     }
-                    System.out.println("Column " + (j + 5) + ": " + Arrays.toString(vals));
-                    if (isSame(vals))
+                    // System.out.println("Column " + (j + 1) + ": " + Arrays.toString(vals));
+                    if (isSame(vals) != 0) {
+                        System.out.println(isSame(vals) + " wins!");
                         return true;
+                    }
+                }
+            }
+        }
+
+        for (int l = 0; l < 2; l++) {
+            for (int i = 0; i < vals.length; i++) {
+                for (int j = 0; j < vals.length; j++) {
+                    for (int k = 0; k < vals.length; k++) {
+                        vals[k] = yRotate(l)[i][j][k];
+                    }
+                    // System.out.println("Column " + (j + 5) + ": " + Arrays.toString(vals));
+                    if (isSame(vals) != 0) {
+                        System.out.println(isSame(vals) + " wins!");
+                        return true;
+                    }
                 }
             }
         }
