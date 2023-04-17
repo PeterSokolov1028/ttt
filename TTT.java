@@ -81,7 +81,6 @@ public class TTT {
     }
 
     private char isSame(char[] x) {
-        boolean same = true;
         for (int i = 0; i < x.length; i++) {
             if (x[i] == 0 || x[0] != x[i])
                 return 0;
